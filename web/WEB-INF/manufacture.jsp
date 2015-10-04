@@ -4,16 +4,8 @@
     Author     : Corncob
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.onlineshopping.POJO.Product"%>
-<%@page import="java.text.DecimalFormat"%>
-<%@page import="java.util.List"%>
-<%
-    DecimalFormat formatter = new DecimalFormat("###,###,###.##");
-    User user = (User) session.getAttribute("user");
-    ArrayList<Product> productList = (ArrayList<Product>) session.getAttribute("productList");
-    ArrayList<Manufacture> manufactureList = (ArrayList<Manufacture>)session.getAttribute("manufactureList");
-    ArrayList<OperatingSystem> osList = (ArrayList<OperatingSystem>)session.getAttribute("osList");
-%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -40,16 +32,17 @@
                     <%@ include file="leftbar.jsp" %>
                     <div class="col-md-9">
                         <div class="clearfix"></div>
-                        <% for (Product _product : productList) {%>
+                        <c:forEach var="_product" items="${productList}">
+                            
                         <div class="col-md-4 top_grid1-box1">
-                            <a href="product.html?id=<%=_product.getId()%>">
+                            <a href="product.html?id=${_product.getId()}">
                                 <div class="grid_1">
                                     <div>
-                                        <img src="images/product/<%=_product.getId()%>.png" class="img-responsive" alt=""/> </div>
+                                        <img src="images/product/${_product.getId()}.png" class="img-responsive" alt=""/> </div>
                                     <div class="grid_2">
-                                        <%=_product.getName()%>
+                                        ${_product.getName()}
                                         <ul class="grid_2-bottom">
-                                            <li class="grid_2-left"><%=formatter.format(_product.getPrice()) + " VNĐ"%></li>
+                                            <li class="grid_2-left">${_product.getPriceFormat()}</li>
                                             <li class="grid_2-right"><div class="btn btn-primary btn-normal btn-inline " title="Mua Ngay">Mua Ngay</div></li>
                                             <div class="clearfix"> </div>
                                         </ul>
@@ -58,10 +51,8 @@
                             </a>
 
                         </div>
-                        <%
-                            }
-                        %>
-
+                        </c:forEach>
+                        
                         <div class="clearfix"> </div>
                     </div>
                 </div>

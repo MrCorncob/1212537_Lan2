@@ -43,9 +43,8 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
+        request.setAttribute("manufactureList", manufactureList);
+        request.setAttribute("osList", osList);
         request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
     }
     

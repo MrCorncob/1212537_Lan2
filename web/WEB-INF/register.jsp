@@ -3,14 +3,6 @@
     Created on : May 10, 2015, 11:11:45 PM
     Author     : Corncob
 --%>
-<%@page import="com.onlineshopping.POJO.OperatingSystem"%>
-<%@page import="com.onlineshopping.POJO.Manufacture"%>
-<%
-    User user = (User) session.getAttribute("user");
-    String message = (String) session.getAttribute("message");
-    ArrayList<Manufacture> manufactureList = (ArrayList<Manufacture>)session.getAttribute("manufactureList");
-    ArrayList<OperatingSystem> osList = (ArrayList<OperatingSystem>)session.getAttribute("osList");
-%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <html>
@@ -39,12 +31,7 @@
                     <form action="register.html" method="post"> 
                         <div class="register-bottom-grid">
                             <h3>THÔNG TIN ĐĂNG NHẬP</h3>
-                            <%                
-                                    if (message != null) {
-                                        out.print("<label>" + message + "</lable></br>");
-                                        session.setAttribute("message", null);
-                                    }
-                            %>
+                            ${requestScope.message}
                             <div style="float:none">
                                 <span>Tên đăng nhập<label>*</label></span>
                                 <input required class="form-control" type="text" name="username">

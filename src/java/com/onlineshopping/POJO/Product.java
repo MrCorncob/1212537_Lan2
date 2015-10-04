@@ -5,6 +5,7 @@
  */
 package com.onlineshopping.POJO;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -138,5 +139,12 @@ public class Product implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public String getPriceFormat()
+    {
+        DecimalFormat formatter = new DecimalFormat("###,###,###.##");
+        String result = formatter.format(this.price) + " VNĐ";
+        return result;
     }
 }

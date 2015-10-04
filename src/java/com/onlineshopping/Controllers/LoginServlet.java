@@ -63,6 +63,8 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("manufactureList", manufactureList);
+        request.setAttribute("osList", osList);
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         
     }
@@ -97,10 +99,9 @@ public class LoginServlet extends HttpServlet {
         if (user != null)//Đăng nhập thành công
         {
             session.setAttribute("user", user);
-            session.setAttribute("loginStatus", "success");
             response.sendRedirect("index.html");
         } else {
-            session.setAttribute("message", "Sai tên đăng nhập hoặc mật khẩu!");
+            request.setAttribute("message", "Sai tên đăng nhập hoặc mật khẩu!");
             request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
     }

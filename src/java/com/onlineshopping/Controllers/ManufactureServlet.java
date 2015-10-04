@@ -47,13 +47,12 @@ public class ManufactureServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int manufactureId = Integer.parseInt(request.getParameter("id"));
-        HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
+        request.setAttribute("manufactureList", manufactureList);
+        request.setAttribute("osList", osList);
         ProductService productService = new ProductService();
         List<Product> productList = new ArrayList<Product>();
         productList = productService.getProductByManufactureId(manufactureId);
-        session.setAttribute("productList", productList);
+        request.setAttribute("productList", productList);
         request.getRequestDispatcher("/WEB-INF/manufacture.jsp").forward(request, response);
     }
 

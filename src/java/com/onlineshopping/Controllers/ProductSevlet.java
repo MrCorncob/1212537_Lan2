@@ -47,12 +47,12 @@ public class ProductSevlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int productId = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
+        request.setAttribute("manufactureList", manufactureList);
+        request.setAttribute("osList", osList);
         com.onlineshopping.Models.ProductService productService = new com.onlineshopping.Models.ProductService();
         Product product = new Product();
         product = productService.getProductById(productId);
-        session.setAttribute("product", product);
+        request.setAttribute("product", product);
         request.getRequestDispatcher("/WEB-INF/product.jsp").forward(request, response);
     }
 

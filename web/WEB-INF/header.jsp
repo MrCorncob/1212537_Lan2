@@ -1,10 +1,9 @@
-<%@page import="java.util.ArrayList"%>
 <%-- 
     Document   : header
     Created on : May 10, 2015, 10:50:54 PM
     Author     : Corncob
 --%>
-<%@page import="com.onlineshopping.POJO.User"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="header">
     <div class="header_top">
@@ -13,17 +12,17 @@
                 <a href="index.html"><img src="images/logo.png" alt=""/></a>
             </div>
             <ul class="shopping_grid">
-                <%
-                    if (user == null) {
-                        out.print("<a href=\"register.html\"><li>Đăng Kí</li></a>");
-                        out.print("<a href=\"login.html\"><li>Đăng Nhập</li></a>");
-                    } else {
-                        String _username = user.getFullname();
-                        out.print("<a href=\"logout.html\"><li>Đăng Xuất</li></a>");
-                        out.print("<a href=\"#\"><li>" + _username + "</li></a>");
-                    }
-                %>
-
+                <c:choose>
+                    <c:when test="${sessionScope.user == null}">
+                        <a href="register.html"><li>Đăng Kí</li></a>
+                        <a href="login.html"><li>Đăng Nhập</li></a>
+                    </c:when>
+                    <c:otherwise>
+                         <a href="logout.html"><li>Đăng Xuất</li></a>
+                         <a href="#"><li>${user.getFullname()}</li></a>
+                    </c:otherwise>   
+                </c:choose> 
+                    
                 <a href="#"><li><span class="m_1">Giỏ Hàng</span>&nbsp;&nbsp;(0) &nbsp;<img src="images/bag.png" alt=""/></li></a>
                 <div class="clearfix"> </div>
             </ul>
@@ -57,14 +56,10 @@
                         </label>
                         <select class="form-control" name="manufacture">
                             <option value="-1">Bất Kì</option>
-                            <%
-                                for (Manufacture _manufacture: manufactureList)
-                                {        
-                                %>
-                                <option value="<%=_manufacture.getId()%>"><%=_manufacture.getName()%></option>
-                                <%
-                                }
-                            %>
+                            <c:forEach var="_manufacture" items="${requestScope.manufactureList}">
+                                <option value="${_manufacture.getId()}">${_manufacture.getName()}</option>
+                            </c:forEach>
+                            
                         </select>
                     </span>
                         <span>
@@ -73,14 +68,9 @@
                         </label>
                         <select class="form-control" name="os">
                             <option value="-1">Bất Kì</option>
-                            <%
-                                for (OperatingSystem _os: osList)
-                                {        
-                                %>
-                                <option value="<%=_os.getId()%>"><%=_os.getName()%></option>
-                                <%
-                                }
-                            %>
+                            <c:forEach var="_os" items="${requestScope.osList}">
+                                <option value="${_os.getId()}">${_os.getName()}</option>
+                            </c:forEach>
                         </select>
                     </span>
                     <span>

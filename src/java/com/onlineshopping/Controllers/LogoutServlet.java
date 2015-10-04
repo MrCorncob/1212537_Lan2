@@ -9,6 +9,7 @@ import com.onlineshopping.Models.ManufactureService;
 import com.onlineshopping.Models.OperatingSystemService;
 import com.onlineshopping.POJO.Manufacture;
 import com.onlineshopping.POJO.OperatingSystem;
+import com.onlineshopping.POJO.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -46,8 +47,18 @@ public class LogoutServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
+        User user = (User) session.getAttribute("user");
+        if (user != null)
+        {
+            session.invalidate();
+            request.setAttribute("message", "Đăng Xuất Thành Công");
+        }
+        else
+        {
+            request.setAttribute("message", "Bạn Chưa Đăng Nhập");
+        }
+        request.setAttribute("manufactureList", manufactureList);
+        request.setAttribute("osList", osList);
         request.getRequestDispatcher("/WEB-INF/logout.jsp").forward(request, response);
     }
 

@@ -54,14 +54,13 @@ public class SearchServlet extends HttpServlet {
         int price = Integer.parseInt(request.getParameter("price"));
         String color = request.getParameter("color");
         
-        HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
+        request.setAttribute("manufactureList", manufactureList);
+        request.setAttribute("osList", osList);
         SearchProductService searchService = new SearchProductService();
         ProductService productService = new ProductService();
         List<Product> productList = new ArrayList<Product>();
         productList = searchService.searchProduct(manufactureId, osId, screenSize, price, color);
-        session.setAttribute("productList", productList);
+        request.setAttribute("productList", productList);
         request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
     }
 

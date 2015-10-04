@@ -28,12 +28,13 @@ public class RegisterServlet extends HttpServlet {
 
     private ArrayList<Manufacture> manufactureList;
     private ArrayList<OperatingSystem> osList;
+
     @Override
-    public void init()
-    {
+    public void init() {
         manufactureList = (ArrayList<Manufacture>) ManufactureService.getManufactureList();
         osList = (ArrayList<OperatingSystem>) OperatingSystemService.getOperatingSystemList();
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +46,7 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,9 +64,15 @@ public class RegisterServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
-        request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            response.sendRedirect("index.html");
+        } else {
+            request.setAttribute("manufactureList", manufactureList);
+            request.setAttribute("osList", osList);
+            request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+        }
+
     }
 
     /**
@@ -86,16 +93,13 @@ public class RegisterServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("manufactureList", manufactureList);
         session.setAttribute("osList", osList);
-        user = (User)session.getAttribute("user");
-        if (user != null)
-        {
+        user = (User) session.getAttribute("user");
+        if (user != null) {
             response.sendRedirect("index.html");
-        }
-        else
-        {
+        } else {
             user = new User();
         }
-        
+
         RegisterService registerService = new RegisterService();
         user.setAddress(request.getParameter("address"));
         user.setBirthDay(request.getParameter("birthday"));
@@ -113,10 +117,10 @@ public class RegisterServlet extends HttpServlet {
 
         if (result == true)//Đăng kí thành công
         {
-            session.setAttribute("message", "Đăng Kí Thành Công, Vui Lòng Đăng Nhập");
+            request.setAttribute("message", "Đăng Kí Thành Công, Vui Lòng Đăng Nhập");
             response.sendRedirect("login.html");
         } else {
-            session.setAttribute("message", "Lỗi! Tên Đăng Nhập Hoặc Email Đã Được Sử Dụng");
+            request.setAttribute("message", "Lỗi! Tên Đăng Nhập Hoặc Email Đã Được Sử Dụng");
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
         }
     }

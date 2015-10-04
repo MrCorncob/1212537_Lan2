@@ -3,16 +3,7 @@
     Created on : May 11, 2015, 5:26:51 AM
     Author     : Corncob
 --%>
-
-<%@page import="com.onlineshopping.POJO.OperatingSystem"%>
-<%@page import="com.onlineshopping.POJO.Manufacture"%>
-<%@page import="com.onlineshopping.POJO.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    User user = (User) session.getAttribute("user");
-    ArrayList<Manufacture> manufactureList = (ArrayList<Manufacture>)session.getAttribute("manufactureList");
-    ArrayList<OperatingSystem> osList = (ArrayList<OperatingSystem>)session.getAttribute("osList");
-%>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -35,28 +26,18 @@
         <div class="main">
             <div class="about">
                 <div class="container">
-                    <%  
-                    if (user == null) {
-                    %>
-                    <h1>Bạn chưa đăng nhập!</h1>
-
-                    <%
-                    } else {
-                        session.invalidate();
-                    %>
-                    <h1>Đã đăng xuất thành công</h1>
-                    <p>Bạn sẽ được chuyển về trang chủ sau 3s nữa</p>
-                    <script>
-            window.setTimeout(function () {
-                window.location.href = "index.html";
-            }, 3000);
-                    </script>
-                    <%
-                        }
-                    %>
+                    <div class="text-center text-info">
+                        <p>${requestScope.message}</p>
+                        <p>Bạn sẽ được chuyển về trang chủ sau 3s nữa</p>
+                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            window.setTimeout(function () {
+                window.location.href = "index.html";
+            }, 3000);
+        </script>
         <!--footer-->
         <%@ include file="footer.jsp" %>
 
