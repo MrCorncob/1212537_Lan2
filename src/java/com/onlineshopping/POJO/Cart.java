@@ -32,7 +32,7 @@ public class Cart implements Serializable {
     private String color;
     @Column(name = "userid")
     private long userId;
-    @Column(name = "productName")
+    @Column(name = "productname")
     private String productName;
     @Column(name = "price")
     private long price;

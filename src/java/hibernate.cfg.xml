@@ -13,5 +13,6 @@
     <mapping class="com.onlineshopping.POJO.Manufacture"/>
     <mapping class="com.onlineshopping.POJO.Product"/>
     <mapping class="com.onlineshopping.POJO.OperatingSystem"/>
+    <mapping class="com.onlineshopping.POJO.Cart"/>
   </session-factory>
 </hibernate-configuration>

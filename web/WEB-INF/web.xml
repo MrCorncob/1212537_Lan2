@@ -44,6 +44,10 @@
         <servlet-name>EditCartServlet</servlet-name>
         <servlet-class>com.onlineshopping.Controllers.EditCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SaveCartsServlet</servlet-name>
+        <servlet-class>com.onlineshopping.Controllers.SaveCartsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/index.html</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>EditCartServlet</servlet-name>
         <url-pattern>/edit-cart.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveCartsServlet</servlet-name>
+        <url-pattern>/save-carts.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
