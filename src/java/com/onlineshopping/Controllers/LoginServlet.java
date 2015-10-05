@@ -5,15 +5,18 @@
  */
 package com.onlineshopping.Controllers;
 
+import com.onlineshopping.Models.CartService;
 import com.onlineshopping.Models.LoginService;
 import com.onlineshopping.Models.MD5Utility;
 import com.onlineshopping.Models.ManufactureService;
 import com.onlineshopping.Models.OperatingSystemService;
+import com.onlineshopping.POJO.Cart;
 import com.onlineshopping.POJO.Manufacture;
 import com.onlineshopping.POJO.OperatingSystem;
 import com.onlineshopping.POJO.User;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -98,6 +101,9 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null)//Đăng nhập thành công
         {
+            CartService cartService = new CartService();
+            List<Cart> carts = cartService.getCartsByUserId(user.getId());
+            session.setAttribute("carts", carts);
             session.setAttribute("user", user);
             response.sendRedirect("index.html");
         } else {

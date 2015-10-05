@@ -63,30 +63,30 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="item" items="${sessionScope.carts}" varStatus="status">
-                                            <tr id="cart-item-${status.index}">
-                                                <td>${item.getProductId()}</td>
-                                                <td>${item.getProductName()}</td>
-                                                <td>${item.getColor()}</td>
-                                                <td><input type="text" class="form-control" name="quantity" value="${item.getQuantity()}" onkeyup="onValueChanged(this);"></td>
-                                                <td>${item.getQuantity()*item.getPrice()} VNĐ</td>
-                                                <td><button class="btn btn-primary" onclick="javascript:updateCart(${status.index});" >Update</button></td>
-                                                <td><button class="btn btn-danger" onclick="javascript:deleteCartItem(${status.index});">Xóa</button></td>
-                                            </tr>
-                                        </c:forEach>
+                                            <c:forEach var="item" items="${sessionScope.carts}" varStatus="status">
+                                                <tr id="cart-item-${status.index}">
+                                                    <td>${item.getProductId()}</td>
+                                                    <td>${item.getProductName()}</td>
+                                                    <td>${item.getColor()}</td>
+                                                    <td><input type="text" class="form-control" name="quantity" value="${item.getQuantity()}" onkeyup="onValueChanged(this);"></td>
+                                                    <td>${item.getQuantity()*item.getPrice()} VNĐ</td>
+                                                    <td><button class="btn btn-primary" onclick="javascript:updateCart(${status.index});" >Update</button></td>
+                                                    <td><button class="btn btn-danger" onclick="javascript:deleteCartItem(${status.index});">Xóa</button></td>
+                                                </tr>
+                                            </c:forEach>
 
                                         </tbody>
 
                                     </table>
-                                    <h3 class="text-info">Tổng Số Tiền Phải Thanh Toán: ${requestScope.totalAmount} VNĐ</h3>
-                                    <center>
-                                        <a  class="btn btn-lg btn-primary" href="save-carts.html">Lưu Giỏ Hàng</a>
-                                    </center>
+                                    <h3 class="text-info">Tổng Số Tiền Phải Thanh Toán: ${sessionScope.totalAmount} VNĐ</h3>
 
                                 </div>
 
                             </div>
                         </c:if>
+                        <center>
+                            <a  class="btn btn-lg btn-primary" href="save-carts.html">Lưu Giỏ Hàng</a>
+                        </center>
                     </div>
                 </div>
             </div>

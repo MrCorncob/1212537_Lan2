@@ -83,7 +83,7 @@ public class CartServlet extends HttpServlet {
                     totalAmount += cart.getPrice() * cart.getQuantity();
                 }
             }
-            request.setAttribute("totalAmount", totalAmount);
+            session.setAttribute("totalAmount", totalAmount);
             request.setAttribute("manufactureList", manufactureList);
             request.setAttribute("osList", osList);
             request.getRequestDispatcher("/WEB-INF/carts.jsp").forward(request, response);
