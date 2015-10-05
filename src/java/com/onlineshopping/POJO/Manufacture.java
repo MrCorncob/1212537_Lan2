@@ -21,21 +21,21 @@ import javax.persistence.Table;
 public class Manufacture implements Serializable {
     
     @Id @GeneratedValue
-    private Long id;
+    private long id;
     @Column(name="name")
     private String name;
 
     /**
      * @return the id
      */
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

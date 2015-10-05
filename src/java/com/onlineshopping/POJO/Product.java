@@ -20,9 +20,9 @@ import javax.persistence.Table;
 public class Product implements Serializable {
     
     @Id
-    private Long id;
-    private Long manufacture;
-    private Long os;
+    private long id;
+    private long manufacture;
+    private long os;
     private String name;
     private String color;
     private float screensize;
@@ -32,42 +32,42 @@ public class Product implements Serializable {
     /**
      * @return the id
      */
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     /**
      * @return the manufacture
      */
-    public Long getManufacture() {
+    public long getManufacture() {
         return manufacture;
     }
 
     /**
      * @param manufacture the manufacture to set
      */
-    public void setManufacture(Long manufacture) {
+    public void setManufacture(long manufacture) {
         this.manufacture = manufacture;
     }
 
     /**
      * @return the os
      */
-    public Long getOs() {
+    public long getOs() {
         return os;
     }
 
     /**
      * @param os the os to set
      */
-    public void setOs(Long os) {
+    public void setOs(long os) {
         this.os = os;
     }
 

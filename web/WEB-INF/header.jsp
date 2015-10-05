@@ -23,7 +23,7 @@
                     </c:otherwise>   
                 </c:choose> 
                     
-                <a href="#"><li><span class="m_1">Giỏ Hàng</span>&nbsp;&nbsp;(0) &nbsp;<img src="images/bag.png" alt=""/></li></a>
+                <a href="carts.html"><li><span class="m_1">Giỏ Hàng</span>&nbsp;&nbsp;(0) &nbsp;<img src="images/bag.png" alt=""/></li></a>
                 <div class="clearfix"> </div>
             </ul>
             <div class="clearfix"> </div>

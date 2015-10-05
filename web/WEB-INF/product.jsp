@@ -55,19 +55,19 @@
                                         ${requestScope.product.getScreensize()}
                                     </span>
                                     <div class="clearfix"></div>
-                                    <div>
+                                    <h2 class="quick">Mô Tả:</h2>
+                                    <p class="quick_desc">${requestScope.product.getDescription()}</p>
+                                    <form action="carts.html" method="post">
+                                        <div>
                                         <label>Màu sắc:</label>
                                         <ul class="form-inline size">
                                             <c:forEach var="_color" items="${requestScope.product.getColor().split(\", \")}">
-                                                <li class="radio"><label><input name="size"  type="radio">${_color}</label></li>
-                                                    </c:forEach>
+                                                <li class="radio"><label><input required name="color"  type="radio" value="${_color}">${_color}</label></li>
+                                            </c:forEach>
 
                                         </ul>
-                                    </div>
-                                    <h2 class="quick">Mô Tả:</h2>
-                                    <p class="quick_desc">${requestScope.product.getDescription()}</p>
-                                    <form>
-                                        <input name="id" type="hidden" value="${requestScope.product.getId()}">
+                                        </div>
+                                        <input name="productid" type="hidden" value="${requestScope.product.getId()}">
                                         <div class="quantity_box">
                                             <ul class="product-qty">
 
@@ -84,7 +84,7 @@
                                             </ul>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <a  class="btn btn-primary btn-lg" value="submit">Thêm Vào Giỏ Hàng</a>
+                                        <button  class="btn btn-primary btn-lg" value="submit">Thêm Vào Giỏ Hàng</button>
                                     </form>
                                 </div>
                                 <div class="clearfix"> </div>

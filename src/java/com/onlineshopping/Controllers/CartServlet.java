@@ -5,15 +5,17 @@
  */
 package com.onlineshopping.Controllers;
 
-import com.onlineshopping.Models.RegisterService;
-import com.onlineshopping.Models.MD5Utility;
 import com.onlineshopping.Models.ManufactureService;
 import com.onlineshopping.Models.OperatingSystemService;
+import com.onlineshopping.Models.ProductService;
+import com.onlineshopping.POJO.Cart;
 import com.onlineshopping.POJO.Manufacture;
 import com.onlineshopping.POJO.OperatingSystem;
+import com.onlineshopping.POJO.Product;
 import com.onlineshopping.POJO.User;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,17 +26,17 @@ import javax.servlet.http.HttpSession;
  *
  * @author Corncob
  */
-public class RegisterServlet extends HttpServlet {
+public class CartServlet extends HttpServlet {
 
     private ArrayList<Manufacture> manufactureList;
     private ArrayList<OperatingSystem> osList;
-
     @Override
-    public void init() {
+    public void init()
+    {
         manufactureList = (ArrayList<Manufacture>) ManufactureService.getManufactureList();
         osList = (ArrayList<OperatingSystem>) OperatingSystemService.getOperatingSystemList();
     }
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +48,8 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,18 +64,30 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute("user");
-        if (user != null) {
-            response.sendRedirect("index.html");
-        } else {
+
+        if (user == null)
+        {
+            response.sendRedirect("unauthorized.html");
+        }
+        else
+        {
+            ArrayList<Cart> carts = (ArrayList<Cart>) session.getAttribute("carts");
+            long totalAmount = 0;
+            if (carts != null)
+            {
+                
+                for(Cart cart: carts)
+                {
+                    totalAmount += cart.getPrice() * cart.getQuantity();
+                }
+            }
+            request.setAttribute("totalAmount", totalAmount);
             request.setAttribute("manufactureList", manufactureList);
             request.setAttribute("osList", osList);
-            request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/carts.jsp").forward(request, response);
         }
-
     }
 
     /**
@@ -88,41 +103,65 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        String password = MD5Utility.getMD5Hash(request.getParameter("password"));
-        User user;
+        Cart cart = new Cart();
+        User user = null;
+        Product product = null;
+        ArrayList<Cart> carts = null;
         HttpSession session = request.getSession(true);
-        session.setAttribute("manufactureList", manufactureList);
-        session.setAttribute("osList", osList);
         user = (User) session.getAttribute("user");
-        if (user != null) {
-            response.sendRedirect("index.html");
-        } else {
-            user = new User();
-        }
 
-        RegisterService registerService = new RegisterService();
-        user.setAddress(request.getParameter("address"));
-        user.setBirthDay(request.getParameter("birthday"));
-        user.setEmail(request.getParameter("email"));
-        user.setGender(request.getParameter("gender").equals("male") ? 0 : 1);
-        user.setFullname(request.getParameter("firstname") + " " + request.getParameter("lastname"));
-        user.setPassword(password);
-        user.setPhone(request.getParameter("phone"));
-        user.setUsername(request.getParameter("username"));
-        user.setStatus(0);
-        //user.setId();
-        boolean result;
-
-        result = registerService.registerUser(user);
-
-        if (result == true)//Đăng kí thành công
+        if (user == null)
         {
-            request.setAttribute("message", "Đăng Kí Thành Công, Vui Lòng Đăng Nhập");
-            response.sendRedirect("login.html");
-        } else {
-            request.setAttribute("message", "Lỗi! Tên Đăng Nhập Hoặc Email Đã Được Sử Dụng");
-            request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            response.sendRedirect("unauthorized.html");
+        } 
+        else
+        {
+            try
+            {
+                carts = (ArrayList<Cart>) session.getAttribute("carts");
+                cart.setProductId(Long.parseLong(request.getParameter("productid")));
+                cart.setColor(request.getParameter("color"));
+                cart.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+                cart.setUserId(user.getId());
+                
+                ProductService productService = new ProductService();
+                product = productService.getProductById((int) cart.getProductId());
+
+                cart.setProductName(product.getName());
+                cart.setPrice(product.getPrice());
+                boolean productIsInCartAlready = false;
+                if (carts != null) {
+                    for (int i = 0; i < carts.size(); i++) {
+                        if (Objects.equals(carts.get(i).getProductId(), cart.getProductId())
+                                && carts.get(i).getColor().equals(cart.getColor()))
+                        {
+                            int newQuantity = carts.get(i).getQuantity() + cart.getQuantity();
+                            cart.setQuantity(newQuantity);
+                            carts.set(i, cart);
+                            productIsInCartAlready = true;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    carts = new ArrayList<>();
+                }
+                if (!productIsInCartAlready) {
+                    carts.add(cart);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            session.setAttribute("carts", carts);
+            //request.setAttribute("manufactureList", manufactureList);
+            //request.setAttribute("osList", osList);
+            //request.getRequestDispatcher("/WEB-INF/carts.jsp").forward(request, response);
+            response.sendRedirect("carts.html");
         }
+        
     }
 
     /**

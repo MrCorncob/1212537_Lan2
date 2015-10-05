@@ -32,6 +32,18 @@
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>com.onlineshopping.Controllers.SearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.onlineshopping.Controllers.CartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnauthorizedServlet</servlet-name>
+        <servlet-class>com.onlineshopping.Controllers.UnauthorizedServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCartServlet</servlet-name>
+        <servlet-class>com.onlineshopping.Controllers.EditCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/index.html</url-pattern>
@@ -63,6 +75,18 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/carts.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnauthorizedServlet</servlet-name>
+        <url-pattern>/unauthorized.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCartServlet</servlet-name>
+        <url-pattern>/edit-cart.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
