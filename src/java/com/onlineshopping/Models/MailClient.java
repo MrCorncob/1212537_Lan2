@@ -39,8 +39,7 @@ public class MailClient {
         generateMailMessage.setHeader("Content-Type", "text/html;charset=UTF-8");
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
         generateMailMessage.setSubject(subject, "UTF-8");
-        String emailBody = content;
-        generateMailMessage.setContent(emailBody, "text/html;charset=UTF-8");
+        generateMailMessage.setContent(content, "text/html;charset=UTF-8");
 
         /*
          * Send mail
